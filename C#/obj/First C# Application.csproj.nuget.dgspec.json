@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\admin\\Desktop\\AT\\MYSQL\\First C# Application\\First C# Application.csproj": {}
+    "C:\\Users\\admin\\Desktop\\AT\\MYSQL\\C#\\First C# Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\admin\\Desktop\\AT\\MYSQL\\First C# Application\\First C# Application.csproj": {
+    "C:\\Users\\admin\\Desktop\\AT\\MYSQL\\C#\\First C# Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\AT\\MYSQL\\First C# Application\\First C# Application.csproj",
+        "projectUniqueName": "C:\\Users\\admin\\Desktop\\AT\\MYSQL\\C#\\First C# Application.csproj",
         "projectName": "First C# Application",
-        "projectPath": "C:\\Users\\admin\\Desktop\\AT\\MYSQL\\First C# Application\\First C# Application.csproj",
+        "projectPath": "C:\\Users\\admin\\Desktop\\AT\\MYSQL\\C#\\First C# Application.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\Desktop\\AT\\MYSQL\\First C# Application\\obj\\",
+        "outputPath": "C:\\Users\\admin\\Desktop\\AT\\MYSQL\\C#\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"

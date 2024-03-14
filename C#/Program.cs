@@ -19,6 +19,7 @@ namespace ConsoleApp
                 {
                     conn.Open();
 
+                    // Insert new user
                     using (MySqlCommand cmd = new MySqlCommand("CreateNewUser", conn))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -29,17 +30,13 @@ namespace ConsoleApp
                     }
 
                     Console.WriteLine("User created successfully!");
-                }
+                    
+                    // UpdateUser stored procedure
+                    int userIdToUpdate = 1;
+                    string updatedName = "Akash";
+                    string updatedEmail = "akash@example.com";
 
-                // UpdateUser stored procedure
-                int userIdToUpdate = 1;
-                string updatedName = "Akash";
-                string updatedEmail = "akash@example.com";
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-
+                    // Update user
                     using (MySqlCommand cmd = new MySqlCommand("UpdateUser", conn))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -51,15 +48,11 @@ namespace ConsoleApp
                     }
 
                     Console.WriteLine("User updated successfully!");
-                }
+                    
+                    // DeleteUser stored procedure
+                    int userIdToDelete = 1;
 
-                // DeleteUser stored procedure
-                int userIdToDelete = 5;
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-
+                    // Delete user
                     using (MySqlCommand cmd = new MySqlCommand("DeleteUser", conn))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -69,32 +62,22 @@ namespace ConsoleApp
                     }
 
                     Console.WriteLine("User deleted successfully!");
-                }
-
-                // GetUserById stored procedure
-                int userIdToGet = 15;
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    using (MySqlCommand cmd = new MySqlCommand("GetUserById", conn))
+                    
+                    // RetrieveUserProductOrder stored procedure
+                    using (MySqlCommand cmd = new MySqlCommand("RetrieveUserProductOrder", conn))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@p_id", userIdToGet);
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            if (reader.Read())
+                            while (reader.Read())
                             {
-                                string name = reader.GetString("name");
-                                string email = reader.GetString("email");
-                                
-                                Console.WriteLine($"Name: {name}, Email: {email}");
-                            }
-                            else
-                            {
-                                Console.WriteLine("User not found!");
+                                // Read and process retrieved data
+                                string userName = reader.GetString(0);
+                                string productName = reader.GetString(1);
+                                int orderQuantity = reader.GetInt32(2);
+
+                                Console.WriteLine($"User: {userName}, Product: {productName}, Order Quantity: {orderQuantity}");
                             }
                         }
                     }
