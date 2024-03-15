@@ -17,6 +17,7 @@ CALL CreateNewUser('John Doe', 'john@example.com');
 
 
 -- Update user
+DROP PROCEDURE IF EXISTS UpdateUser;
 DELIMITER //
 
 CREATE PROCEDURE UpdateUser(
@@ -36,6 +37,7 @@ CALL UpdateUser(1, 'Jane Smith', 'jane@example.com');
 
 
 -- Delete user
+DROP PROCEDURE IF EXISTS DeleteUser;
 DELIMITER //
 
 CREATE PROCEDURE DeleteUser(
@@ -52,7 +54,7 @@ CALL DeleteUser(1);
 
 
 -- Get user by ID
-
+DROP PROCEDURE IF EXISTS GetUserById;
 DELIMITER //
 
 CREATE PROCEDURE GetUserById(
@@ -66,66 +68,31 @@ DELIMITER ;
 
 CALL GetUserById(3);
 
-
-
+DROP PROCEDURE IF EXISTS RetrieveUserProductOrder;
 DELIMITER //
 
 CREATE PROCEDURE RetrieveUserProductOrder()
 BEGIN
-    -- Declare variables to store data retrieved from the tables
-    DECLARE user_name VARCHAR(255);
-    DECLARE product_name VARCHAR(255);
-    DECLARE order_quantity INT;
-    
-    -- Cursor to fetch data from the users table
-    DECLARE user_cursor CURSOR FOR
-    SELECT name FROM users;
-    
-    -- Cursor to fetch data from the products table
-    DECLARE product_cursor CURSOR FOR
-    SELECT name FROM products;
-    
-    -- Cursor to fetch data from the orders table
-    DECLARE order_cursor CURSOR FOR
-    SELECT quantity FROM orders;
-    
-    -- Open user cursor and fetch data
-    OPEN user_cursor;
-    FETCH user_cursor INTO user_name;
-    
-    -- Open product cursor and fetch data
-    OPEN product_cursor;
-    FETCH product_cursor INTO product_name;
-    
-    -- Open order cursor and fetch data
-    OPEN order_cursor;
-    FETCH order_cursor INTO order_quantity;
-    
-    -- Loop through data and output
-    WHILE (user_name IS NOT NULL AND product_name IS NOT NULL AND order_quantity IS NOT NULL) DO
-        -- Output retrieved data
-        SELECT user_name, product_name, order_quantity;
-        
-        -- Fetch next row from each cursor
-        FETCH user_cursor INTO user_name;
-        FETCH product_cursor INTO product_name;
-        FETCH order_cursor INTO order_quantity;
-    END WHILE;
-    
-    -- Close cursors
-    CLOSE user_cursor;
-    CLOSE product_cursor;
-    CLOSE order_cursor;
+ -- Insert some sample data into the tables for demonstration
+    INSERT INTO users (name) VALUES ('Alice'), ('Bob'), ('Charlie');
+    INSERT INTO products (name) VALUES ('Product A'), ('Product B'), ('Product C');
+    INSERT INTO orders (user_id, product_id, quantity) VALUES
+        (1, 1, 10),
+        (2, 2, 5), 
+        (3, 3, 8);  
 
-     IF user_name IS NULL AND product_name IS NULL AND order_quantity IS NULL THEN
+    -- Select data from the tables using joins
+    SELECT users.name AS user_name, products.name AS product_name, orders.quantity AS order_quantity
+    FROM orders
+    JOIN users ON orders.user_id = users.id
+    JOIN products ON orders.product_id = products.id;
+
+    -- Check if there are no records
+    IF NOT EXISTS (SELECT * FROM orders) THEN
         SELECT 'No data found';
     END IF;
-    
-
-   
 END //
 
 DELIMITER ;
 
-
- CALL RetrieveUserProductOrder();
+CALL RetrieveUserProductOrder();
