@@ -56,12 +56,14 @@ MySQL supports several types of joins, each serving a different purpose:
 
 ## Benefits
 
-**Data Integrity:** Joins help maintain data integrity by allowing you to retrieve related information from multiple tables in a single query.
-**Efficiency:** Performing joins in the database server reduces network traffic and improves query performance compared to retrieving and processing data in the application layer.
-**Flexibility:** Joins provide flexibility in data analysis and reporting, enabling complex queries to be executed efficiently.
-Best Practices
-**Understand Relationships:** Understand the relationships between tables before choosing the appropriate join type.
-Use Aliases: Use aliases for table names to improve readability and reduce typing.
-**Test Queries:** Test your queries thoroughly, especially when dealing with large datasets or complex joins.
-**Optimize Schema:** Optimize your database schema and indexing to improve join performance.
+- **Data Integrity:** Joins help maintain data integrity by allowing you to retrieve related information from multiple tables in a single query.
+- **Efficiency:** Performing joins in the database server reduces network traffic and improves query performance compared to retrieving and processing data in the application layer.
+- **Flexibility:** Joins provide flexibility in data analysis and reporting, enabling complex queries to be executed efficiently.
+
+## Best Practices
+
+- **Understand Relationships:** Understand the relationships between tables before choosing the appropriate join type.
+- **Use Aliases:** Use aliases for table names to improve readability and reduce typing.
+- **Test Queries:** Test your queries thoroughly, especially when dealing with large datasets or complex joins.
+- **Optimize Schema:** Optimize your database schema and indexing to improve join performance.
 
