@@ -1,4 +1,4 @@
--- Active: 1712217931410@@127.0.0.1@3306@demo_product
+-- Active: 1712217931410@@127.0.0.1@3306@classicmodels
 /* Creating two tables */
 CREATE TABLE members (
     member_id INT AUTO_INCREMENT,
