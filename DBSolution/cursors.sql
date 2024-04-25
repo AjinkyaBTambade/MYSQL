@@ -1,3 +1,4 @@
+-- Active: 1712217931410@@127.0.0.1@3306@classicmodels
 use classicmodels;
 
 -- Create customers table
