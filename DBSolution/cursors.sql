@@ -90,3 +90,52 @@ DELIMITER ;
 
 -- Call the stored procedure
 CALL calculate_order_total_amount();
+
+
+
+
+
+# Cursors in Database Management Systems
+
+## Overview
+
+In database management systems (DBMS), a cursor is a database object that enables traversal over the records in a result set. Cursors provide a mechanism for iterating through the rows returned by a query, allowing for sequential processing of the data.
+
+## Types of Cursors
+
+### 1. Implicit Cursors
+   - These cursors are automatically created by the DBMS when a SQL statement is executed. They are suitable for simple queries that return a single result set.
+
+### 2. Explicit Cursors
+   - These cursors are explicitly declared by the programmer and provide more control over the result set traversal. They are suitable for complex queries that require multiple steps or conditions.
+
+## Cursor Operations
+
+1. **Opening a Cursor**: Cursors must be explicitly opened before fetching data from them.
+
+2. **Fetching Data**: Data can be fetched from the cursor one row at a time or in bulk, depending on the requirements.
+
+3. **Closing a Cursor**: After processing is complete, the cursor should be closed to release associated resources.
+
+4. **Error Handling**: Cursors should include error handling logic to handle exceptions that may occur during cursor operations.
+
+## Purpose of Cursors
+
+1. **Row-by-Row Processing**: Cursors enable row-by-row processing of query results, allowing for operations such as data manipulation, validation, or transformation.
+
+2. **Scrollable Result Sets**: Cursors can provide scrollable access to result sets, allowing for forward-only or bi-directional traversal of the data.
+
+3. **Complex Data Processing**: Cursors are useful for processing complex queries that involve joins, aggregations, or conditional logic.
+
+4. **Cursor Variables**: Cursor variables allow for dynamic cursor operations, enabling the execution of dynamic SQL statements or parameterized queries.
+
+## Best Practices
+
+1. **Minimize Cursor Usage**: Cursors can introduce overhead and reduce performance, so they should be used judiciously, especially for large result sets.
+
+2. **Optimize Query Performance**: Before using a cursor, consider optimizing the underlying query to minimize the amount of data processed.
+
+3. **Close Cursors Promptly**: Always close cursors promptly after they are no longer needed to release database resources.
+
+4. **Avoid Long Transactions**: Cursors should be used within short-lived transactions to minimize locking and contention issues.
+
