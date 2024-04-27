@@ -97,7 +97,7 @@ MySQL supports several types of joins, each serving a different purpose:
 
 
 
-# Cursors in Database Management Systems
+# Cursors in MYSQL
 
 ## Overview
 
@@ -144,7 +144,7 @@ In database management systems (DBMS), a cursor is a database object that enable
 
 
 
-# Joins in Database Management Systems
+# Joins in MYSQL
 
 ## Overview
 
@@ -206,7 +206,7 @@ Join conditions specify how tables should be combined based on the values in the
 
 
 
-# Triggers in Database Management Systems
+# Triggers in MYSQL
 
 ## Overview
 
@@ -275,8 +275,29 @@ MySQL Events are tasks or procedures scheduled to execute at specific times or i
 
 ### Creating Events
 
-Events in MySQL are created using the `CREATE EVENT` statement, followed by the event's name, schedule, and SQL statement.
+**Events in MySQL are created using the `CREATE EVENT` statement, followed by the event's name, schedule, and SQL statement.**
 
 ## Notes
 
-Events are a powerful feature of MySQL, but they should be used with caution, especially in production environments. Ensure that events are thoroughly tested before deployment to avoid unintended consequences. Regularly review and maintain your events to ensure they continue to meet your database management needs.
+**Events are a powerful feature of MySQL, but they should be used with caution, especially in production environments. Ensure that events are thoroughly tested before deployment to avoid unintended consequences. Regularly review and maintain your events to ensure they continue to meet your database management needs.**
+
+
+
+## Stored Procedures in MySQL
+
+**Stored procedures in MySQL are precompiled SQL code that you can save, reuse, and execute within the database server. They offer several advantages:**
+
+1. **Modularity**: You can divide your complex SQL logic into manageable, reusable modules.
+2. **Performance**: Stored procedures can enhance performance by reducing network traffic and optimizing execution plans.
+3. **Security**: They can help enforce security by controlling access to data through parameterized queries.
+4. **Encapsulation**: Business logic is encapsulated within the database, promoting data integrity and consistency.
+
+### Syntax
+
+**Here's a basic syntax for creating a stored procedure in MySQL:**
+
+**```sql**
+**CREATE PROCEDURE procedure_name ([parameters])**
+**BEGIN**
+    **-- SQL statements**
+**END;**
