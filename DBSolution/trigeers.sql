@@ -51,11 +51,6 @@ END//
 -- Reset delimiter
 DELIMITER ;
 
-Select * from students;
-
-Select * from grades;
-
-USE classicmodels;
 
 -- Insert a new grade for StudentID 1 within the same transaction
 START TRANSACTION;
@@ -65,4 +60,8 @@ COMMIT;
 
 -- Query the Students table to see the updated data
 SELECT * FROM Students;
+
+Select * from grades;
+
+USE classicmodels;
 
