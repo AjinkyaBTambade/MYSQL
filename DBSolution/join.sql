@@ -1,100 +1,83 @@
--- Active: 1712217931410@@127.0.0.1@3306@classicmodels
-/* Creating two tables */
-CREATE TABLE members (
-    member_id INT AUTO_INCREMENT,
-    name VARCHAR(100),
-    PRIMARY KEY (member_id)
+/* Creating the database */
+DROP DATABASE TFLDB;
+CREATE DATABASE TFLDB;
+USE TFLDB;
+
+/* Creating tables */
+CREATE TABLE employees (
+    employee_id INT AUTO_INCREMENT,
+    employee_name VARCHAR(100),
+    department_id INT,
+    PRIMARY KEY (employee_id)
 );
 
-CREATE TABLE committees (
-    committee_id INT AUTO_INCREMENT,
-    name VARCHAR(100),
-    PRIMARY KEY (committee_id)
+CREATE TABLE departments (
+    department_id INT AUTO_INCREMENT,
+    department_name VARCHAR(100),
+    PRIMARY KEY (department_id)
+);
+
+CREATE TABLE projects (
+    project_id INT AUTO_INCREMENT,
+    project_name VARCHAR(100),
+    department_id INT,
+    PRIMARY KEY (project_id)
 );
 
 /* Inserting data into tables */
-INSERT INTO members(name)
-VALUES('John'),('Jane'),('Mary'),('David'),('Amelia');
+INSERT INTO employees (employee_name, department_id) VALUES
+('Ajinkya', 1),
+('Bhupendra', 2),
+('Ritesh', 3),
+('Shridhar', 1),
+('Nayan', 2);
 
-INSERT INTO committees(name)
-VALUES('John'),('Mary'),('Amelia'),('Joe'),('sahil');
+INSERT INTO departments (department_name) VALUES
+('HR'),
+('Engineering'),
+('Marketing');
 
-/* Inner Join */
-SELECT m.member_id, c.committee_id, c.name AS name
-FROM members m INNER JOIN committees c ON m.name = c.name;
-
-/* Inner Join with USING */
-SELECT m.member_id, c.committee_id, c.name AS name
-FROM members m INNER JOIN committees c USING(name);
-
-/* Left Join */
-SELECT m.member_id, m.name as name, c.committee_id, c.name AS name
-FROM members m LEFT JOIN committees c  ON m.name = c.name;
-
-/* Left Join with NULL values */
-SELECT m.member_id, m.name as name, c.committee_id, c.name AS name
-FROM members m LEFT JOIN committees c  ON m.name = c.name WHERE c.name IS NULL;
-
-/* Right Join */
-SELECT m.member_id, m.name AS member, c.committee_id, c.name AS committee
-FROM members m RIGHT JOIN committees c USING (name);
-
-/* Right Join with NULL values */
-SELECT m.member_id, m.name AS member, c.committee_id, c.name AS committee
-FROM members m RIGHT JOIN committees c USING (name) WHERE m.name IS NULL;
-
-/* Cross Join */
-SELECT m.member_id, m.name AS member, c.committee_id, c.name AS committee
-FROM members m CROSS JOIN committees c;
-
-/* Group By with Inner Join */
-SELECT t1.orderNumber, t1.status, SUM(quantityOrdered * priceEach) AS total
-FROM orders t1 INNER JOIN orderdetails t2 ON t1.orderNumber = t2.orderNumber
-GROUP BY status;
-
-/* Ordering with Inner Join */
-SELECT o.orderNumber, orderDate, orderLineNumber, productCode, productName, quantityOrdered, priceEach
-FROM orders o INNER JOIN orderdetails od ON o.orderNumber = od.orderNumber
-INNER JOIN products USING (productCode)
-ORDER BY orderNumber, orderLineNumber;
-
-/* Join with Conditions */
-SELECT orderNumber, productName, msrp, priceEach
-FROM products p INNER JOIN orderdetails o ON p.productcode = o.productcode
-WHERE p.msrp > o.priceEach AND p.buyPrice > 50;
-
-/* Group By */
-SELECT status, COUNT(*) FROM orders
-GROUP BY status;
-
-/* Group By with SUM */
-SELECT orderNumber, SUM(quantityOrdered * priceEach) AS total
-FROM orderdetails
-GROUP BY orderNumber
-ORDER BY total DESC;
-
-/* Group By with HAVING */
-SELECT YEAR(orderDate) AS year, SUM(quantityOrdered * priceEach) AS total
-FROM orders INNER JOIN orderdetails USING (orderNumber)
-WHERE status = 'cancelled'
-GROUP BY year
-ORDER BY total DESC;
-
-/* Group By with HAVING and Inner Join */
-SELECT YEAR(orderDate) AS year, SUM(quantityOrdered * priceEach) AS total
-FROM orders INNER JOIN orderdetails USING (orderNumber)
-WHERE status = 'Shipped'
-GROUP BY year HAVING year >= 2003;
-
-/* Rollup with Group By */
-SELECT YEAR(orderDate) AS year, ROUND(SUM(quantityOrdered*priceEach)) AS totalOrderValue
-FROM orders, orderdetails
-GROUP BY year WITH ROLLUP;
-
-/* Exists Operator */
-SELECT customerNumber, customerName
-FROM customers
-WHERE EXISTS (SELECT 1 FROM orders WHERE orders.customerNumber = customers.customerNumber);
+INSERT INTO projects (project_name, department_id) VALUES
+('TFL Portal', 1),
+('TFL Assesment ', 2),
+('Common Services', 3),
+('TFL E-Krushi ', 1),
+('TFL GreenHouse', 2);
 
 
+/* Inner Join: Retrieve employees along with their department names */
+SELECT e.employee_id, e.employee_name, d.department_name
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.department_id;
 
+/* Left Join: Retrieve all employees along with their department names, including those without a department */
+SELECT e.employee_id, e.employee_name, d.department_name
+FROM employees e
+LEFT JOIN departments d ON e.department_id = d.department_id;
+
+/* Right Join: Retrieve all departments along with their employees, including departments without employees */
+SELECT e.employee_id, e.employee_name, d.department_name
+FROM employees e
+RIGHT JOIN departments d ON e.department_id = d.department_id;
+
+/* Full Outer Join: Retrieve all employees and departments, including those without a match */
+SELECT e.employee_id, e.employee_name, d.department_name
+FROM employees e
+LEFT JOIN departments d ON e.department_id = d.department_id
+UNION
+SELECT e.employee_id, e.employee_name, d.department_name
+FROM employees e
+RIGHT JOIN departments d ON e.department_id = d.department_id;
+
+
+/* Cross Join: Retrieve all possible combinations of employees and projects */
+SELECT e.employee_name, p.project_name
+FROM employees e
+CROSS JOIN projects p;
+
+
+/* Self Join: Retrieve pairs of employees who are in the same department */
+SELECT e1.employee_name AS employee1, e2.employee_name AS employee2, d.department_name
+FROM employees e1
+INNER JOIN employees e2 ON e1.department_id = e2.department_id AND e1.employee_id <> e2.employee_id
+INNER JOIN departments d ON e1.department_id = d.department_id;
