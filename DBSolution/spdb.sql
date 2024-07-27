@@ -12,7 +12,7 @@ END //
 
 DELIMITER ;
 
-CALL CreateNewUser('John Doe', 'john@example.com');
+CALL CreateNewUser('Ajinkya Tambade', 'ajinkya@gmail.com');
 
 
 
@@ -31,7 +31,7 @@ END //
 
 DELIMITER ;
 
-CALL UpdateUser(1, 'Jane Smith', 'jane@example.com');
+CALL UpdateUser(1, 'Shridhar', 'shri@gmail.com');
 
 
 
@@ -74,7 +74,7 @@ DELIMITER //
 CREATE PROCEDURE RetrieveUserProductOrder()
 BEGIN
  -- Insert some sample data into the tables for demonstration
-    INSERT INTO users (name) VALUES ('Alice'), ('Bob'), ('Charlie');
+    INSERT INTO users (name) VALUES ('Ash'), ('Ram'), ('Sham');
     INSERT INTO products (name) VALUES ('Product A'), ('Product B'), ('Product C');
     INSERT INTO orders (user_id, product_id, quantity) VALUES
         (1, 1, 10),

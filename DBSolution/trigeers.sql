@@ -19,8 +19,8 @@ CREATE TABLE Grades (
 -- Insert sample data into Students table
 INSERT INTO Students (StudentID, Name, AverageGrade)
 VALUES 
-    (1, 'John Smith', 85.5),
-    (2, 'Jane Doe', 92.0);
+    (1, 'Ajinkya Tambade', 85.5),
+    (2, 'Shridhar Patil', 92.0);
 
 -- Insert sample data into Grades table
 INSERT INTO Grades (GradeID, StudentID, Grade)
