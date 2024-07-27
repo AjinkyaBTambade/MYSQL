@@ -1,5 +1,8 @@
 -- Create new user
-
+ use sp;
+ 
+ DROP PROCEDURE IF EXISTS CreateNewUser;
+ 
 DELIMITER //
 
 CREATE PROCEDURE CreateNewUser(
@@ -77,9 +80,9 @@ BEGIN
     INSERT INTO users (name) VALUES ('Ash'), ('Ram'), ('Sham');
     INSERT INTO products (name) VALUES ('Product A'), ('Product B'), ('Product C');
     INSERT INTO orders (user_id, product_id, quantity) VALUES
-        (1, 1, 10),
-        (2, 2, 5), 
-        (3, 3, 8);  
+        (2, 1, 10),
+        (3, 2, 5), 
+        (2, 3, 8);  
 
     -- Select data from the tables using joins
     SELECT users.name AS user_name, products.name AS product_name, orders.quantity AS order_quantity
