@@ -113,3 +113,115 @@ UPDATE  employees  SET department="BOD" WHERE id=1;
 
 SELECT * FROM employees;
 
+--------------------------------------------------------------------------------------------------------
+
+DROP DATABASE sample_ecommerce;
+
+CREATE DATABASE sample_ecommerce;
+USE sample_ecommerce;
+
+
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,  
+    product_id INT,                         
+    quantity INT,                            
+    order_date DATETIME,                     
+    status ENUM('pending', 'completed', 'canceled')  
+);
+
+CREATE TABLE inventory (
+    product_id INT PRIMARY KEY,               
+    stock_quantity INT                      
+);
+
+DELIMITER $$
+
+CREATE TRIGGER after_order_insert
+AFTER INSERT ON orders
+FOR EACH ROW
+BEGIN
+    DECLARE available_stock INT;
+    DECLARE error_message VARCHAR(255);
+
+
+    SELECT stock_quantity INTO available_stock
+    FROM inventory
+    WHERE product_id = NEW.product_id;
+
+   
+    IF available_stock IS NOT NULL AND available_stock >= NEW.quantity THEN
+        UPDATE inventory
+        SET stock_quantity = stock_quantity - NEW.quantity
+        WHERE product_id = NEW.product_id;
+    ELSE
+ 
+        SET error_message = CONCAT('Insufficient stock for the product ID ', NEW.product_id, ', available stock: ', available_stock);
+
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = error_message;
+    END IF;
+END $$
+
+DELIMITER ;
+
+
+
+INSERT INTO inventory (product_id, stock_quantity)
+VALUES
+    (1, 56), 
+    (2, 78), 
+    (5, 0);  
+
+
+INSERT INTO orders (product_id, quantity, order_date, status)
+VALUES (2, 10, NOW(), 'pending'); 
+
+
+SELECT * FROM inventory WHERE product_id = 2;
+
+
+
+create table payments(
+payment_id INT AUTO_INCREMENT PRIMARY KEY,
+order_id INT ,
+amount DECIMAL(10,2),
+payment_date DATETIME,
+status ENUM ('completed','pending')
+);
+
+
+DROP TRIGGER IF EXISTS update_order_status_after_payment;
+
+DELIMITER $$
+
+CREATE TRIGGER update_order_status_after_payment
+AFTER INSERT ON payments
+FOR EACH ROW
+BEGIN
+   IF NEW.status = 'completed' THEN
+       UPDATE orders SET status = 'completed'
+       WHERE order_id = NEW.order_id;
+	ELSE
+	   UPDATE orders SET status = 'pending'
+       WHERE order_id = NEW.order_id;
+   END IF;
+END;
+
+DELIMITER;
+
+
+
+INSERT INTO orders (product_id, quantity, order_date, status)
+VALUES (3, 15, NOW(), 'pending'); 
+
+SELECT order_id, status
+FROM orders
+WHERE order_id = 1;  
+
+SELECT * FROM ORDERS;
+SELECT * FROM PAYMENTS;
+
+INSERT INTO payments (order_id, amount, payment_date, status)
+VALUES (4, 500.00, NOW(), 'completed');  
+
+
