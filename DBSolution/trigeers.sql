@@ -65,3 +65,51 @@ Select * from grades;
 
 USE classicmodels;
 
+----------------------------------------------------------------------------------------------------
+
+drop database HRDB;
+CREATE database HRDB;
+use HRDB;
+ 
+CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    department VARCHAR(100),
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+ 
+ 
+-- create a trigger named update_last_updated that updates the last_updated column
+--  whenever a row is inserted or updated in the employees table
+DELIMITER //
+CREATE TRIGGER update_last_updated
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+SET NEW.last_updated = current_timestamp();
+END;
+//
+ 
+ 
+CREATE TRIGGER update_last_updated_on_update
+BEFORE UPDATE ON employees
+FOR EACH ROW
+BEGIN
+    SET NEW.last_updated = CURRENT_TIMESTAMP;
+END;
+//
+DELIMITER ;
+ 
+ 
+-- after   defining table   try to write  DML queries to test triggers are working
+-- as per expectation of buisiness logic
+ 
+-- Insert a new employee
+INSERT INTO employees (name, department) VALUES ('Ravi Tambade', 'training');
+ 
+-- Update existing record
+ 
+UPDATE  employees  SET department="BOD" WHERE id=1;
+
+SELECT * FROM employees;
+
